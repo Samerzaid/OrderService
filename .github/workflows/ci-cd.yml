@@ -1,0 +1,52 @@
+name: Build and Deploy OrderService
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Setup .NET SDK
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+
+    # Step 3: Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Step 4: Build the project
+    - name: Build project
+      run: dotnet build --configuration Release --no-restore
+
+    # Step 5: Run tests (if you have them)
+    - name: Run tests
+      run: dotnet test --no-restore --verbosity normal
+
+    # Step 6: Publish application
+    - name: Publish project
+      run: dotnet publish -c Release -o ./publish --no-build
+
+    # Step 7: Upload Docker image to Docker Hub
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t samerzaid/orderservice:${{ github.sha }} .
+        docker push samerzaid/orderservice:${{ github.sha }}
