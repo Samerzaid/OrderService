@@ -35,5 +35,5 @@ jobs:
       # Step 5: Push Docker Image to Registry
       - name: Push Docker Image
         run: |
-          IMAGE_NAME="orderservice/samer"
+          IMAGE_NAME="orderservice"
           docker push $IMAGE_NAME:${{ env.TAG_NAME }}
