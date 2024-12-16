@@ -13,7 +13,7 @@ services:
 
   bookingserviceapi:
     image: samerzaid/orderservice:latest
-    container_name: OrderService
+    container_name: orderservice
     ports:
       - "8087:8087"  # Expose your API on port 8080
     depends_on:
