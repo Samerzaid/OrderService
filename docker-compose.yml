@@ -11,8 +11,8 @@ services:
     volumes:
       - sqlserver_data:/var/opt/mssql  # Persist database data in a volume
 
-  bookingserviceapi:
-    image: samerzaid/orderservice:latest
+  orderserviceapi:
+    image: samerzaid/orderservice:v20241216135558
     container_name: OrderService
     ports:
       - "8087:8087"  # Expose your API on port 8080
