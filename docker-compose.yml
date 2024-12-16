@@ -2,7 +2,7 @@ version: "3.8"
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest  # SQL Server image
-    container_name: ordersqlserver
+    container_name: Ordersqlserver
     ports:
       - "1433:1433"  # Expose SQL Server's port
     environment:
@@ -13,7 +13,7 @@ services:
 
   bookingserviceapi:
     image: samerzaid/orderservice:latest
-    container_name: orderservice
+    container_name: OrderService
     ports:
       - "8087:8087"  # Expose your API on port 8080
     depends_on:
